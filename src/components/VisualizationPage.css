@@ -1,0 +1,149 @@
+/* Контейнер на весь экран */
+.visualization-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+}
+
+/* Фоновое изображение.
+   Если изображение лежит в public, адрес должен быть вида '/бэк.png' */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/public/бэк.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+/* Центральное число (находится поверх фона) */
+.center-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    font-weight: bold;
+    z-index: 1;
+    color: black;
+}
+
+/* Анимация "улёта" */
+.fly-animation {
+    animation: flyToCorner 1s forwards;
+}
+
+@keyframes flyToCorner {
+    from {
+        transform: translate(-50%, -50%);
+    }
+    to {
+        transform: translate(calc(80vw - 50%), calc(90vh - 50%));
+    }
+}
+
+/*!* Отображение drawnNumbers в 2 ряда *!*/
+/*.drawn-numbers {*/
+/*    position: absolute;*/
+/*    bottom: 20px;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    width: 90%;*/
+/*    text-align: center;*/
+/*    z-index: 1;*/
+/*}*/
+
+/*.drawn-number {*/
+/*    font-size: 48px;*/
+/*    margin: 10px;*/
+/*    display: inline-block;*/
+/*}*/
+
+/* Добавляем стили для drawn-numbers */
+.drawn-numbers {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.drawn-number {
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Меняем анимацию на перемещение влево */
+@keyframes flyToLeft {
+    from {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    to {
+        left: 100px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        opacity: 0;
+    }
+}
+
+.fly-animation {
+    animation: flyToLeft 1s forwards;
+    z-index: 3;
+}
+
+.center-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Остальные стили остаются без изменений */
+
+/* Добавляем стили для нового отображения */
+.new-stage-numbers {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 40px;
+    z-index: 3;
+    flex-direction: column;
+    align-items: center;
+}
+
+.column {
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.large-number {
+    font-size: 64px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+}
