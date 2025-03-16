@@ -7,8 +7,8 @@ function App() {
   return (
       <Router>
         <Routes>
-          <Route path="/" element={<AdminPage />} />
-          <Route path="/visualization" element={<VisualizationPage />} />
+          <Route path="/uyqwefgqiuye12iu3gh12h3/" element={<AdminPage />} />
+          <Route path="/uyqwefgqiuye12iu3gh12h3/visualization" element={<VisualizationPage />} />
         </Routes>
       </Router>
   );

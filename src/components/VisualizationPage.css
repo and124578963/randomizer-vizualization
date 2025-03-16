@@ -1,3 +1,11 @@
+:root {
+    --animation-left: 400px;
+    /*--animation-top: 70%;*/
+    /*--animation-transform: translateY(-50%);*/
+    /*--animation-font-size: 24px;*/
+}
+
+
 /* Контейнер на весь экран */
 .visualization-page {
     position: relative;
@@ -21,31 +29,7 @@
     z-index: -1;
 }
 
-/* Центральное число (находится поверх фона) */
-.center-number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 100px;
-    font-weight: bold;
-    z-index: 1;
-    color: black;
-}
 
-/* Анимация "улёта" */
-.fly-animation {
-    animation: flyToCorner 1s forwards;
-}
-
-@keyframes flyToCorner {
-    from {
-        transform: translate(-50%, -50%);
-    }
-    to {
-        transform: translate(calc(80vw - 50%), calc(90vh - 50%));
-    }
-}
 
 /*!* Отображение drawnNumbers в 2 ряда *!*/
 /*.drawn-numbers {*/
@@ -66,23 +50,27 @@
 
 /* Добавляем стили для drawn-numbers */
 .drawn-numbers {
+
     position: fixed;
-    left: 20px;
-    top: 50%;
+    left: 205px;
+    bottom: 220px;
     transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background: rgba(0, 0, 0, 0.3);
+    display: flex
+;
+    flex-direction: row;
+    gap: 25px;
+    /* background: rgba(0, 0, 0, 0.3); */
     padding: 20px;
     border-radius: 10px;
     z-index: 2;
+
 }
 
 .drawn-number {
-    font-size: 24px;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 50px;
+    color: #333333;
+    font-weight: normal;
+    font-family: TinkoffSans;
 }
 
 /* Меняем анимацию на перемещение влево */
@@ -92,11 +80,11 @@
         opacity: 1;
     }
     to {
-        left: 100px;
-        top: 50%;
+        left: var(--animation-left);
+        top: 72%;
         transform: translateY(-50%);
-        font-size: 24px;
-        opacity: 0;
+        font-size: 50px;
+        opacity: 0.1;
     }
 }
 
@@ -110,11 +98,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 100px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 250px;
+    font-weight: normal;
+    color: #333333;
     z-index: 1;
+    font-family: TinkoffSans;
 }
 
 /* Остальные стили остаются без изменений */
@@ -134,16 +122,33 @@
 
 .column {
     display: flex;
-    gap: 30px;
+    gap: 90px;
     flex-direction: row;
     align-items: center;
 }
 
 .large-number {
-    font-size: 64px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 100px;
+    font-weight: normal;
+    color: #333333;
     text-align: center;
+    font-family: TinkoffSans;
 
 }
+
+
+
+@font-face {
+    font-family: 'TinkoffSans';
+    src: url('./fonts/TinkoffSans_Bold.ttf')  format("truetype"); ;
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TinkoffSans';
+    src: url('./fonts/TinkoffSans_Medium.ttf')  format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+

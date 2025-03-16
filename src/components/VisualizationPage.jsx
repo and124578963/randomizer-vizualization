@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchWithAuth } from '../utils/fetchWithAuth';
 import './VisualizationPage.css';
+import './fonts/TinkoffSans_Bold.otf';
+import './fonts/TinkoffSans_Medium.otf';
+
 
 const VisualizationPage = () => {
     const host = "http://localhost:8080";
@@ -9,6 +12,8 @@ const VisualizationPage = () => {
     const [flyAnimation, setFlyAnimation] = useState(false);
     const [flyingNumber, setFlyingNumber] = useState(null);
     const [prevDrawnNumbers, setPrevDrawnNumbers] = useState([]);
+
+    // const [animationLeftSpace, setAnimationLeftSpace] = useState(400);
 
     const statusRef = useRef(null);
     const animationTimeout = useRef(null);
@@ -88,8 +93,28 @@ const VisualizationPage = () => {
             updateNumber();
         };
 
+        const calculateLeftSpace = () => {
+            var currentLeft = 225;
+            prevDrawnNumbers.forEach(num => {
+                const numStr = Math.abs(num).toString();
+                const length = numStr.length;
+                if (length === 1) {
+                    currentLeft += 50
+                } else if (length === 2) {
+                    currentLeft += 80
+                } else if (length === 3) {
+                    currentLeft += 100
+                }
+            });
+            console.log("------------------------------------")
+            console.log("prevDrawnNumbers", prevDrawnNumbers)
+            console.log("currentLeft", currentLeft)
+            document.documentElement.style.setProperty('--animation-left', currentLeft + 'px');
+        };
+
         const handleReadyStatus = () => {
             if(statusRef.previous === "НОМЕР СГЕНЕРИРОВАН") {
+                calculateLeftSpace();
                 triggerFlyAnimation(displayNumber, 0);
             } else {
                 setDisplayNumber(0);
@@ -99,6 +124,7 @@ const VisualizationPage = () => {
         const handleStageCompleted = () => {
             // Запускаем анимацию для последнего числа
             if(displayNumber !== null && displayNumber !== 0) {
+                calculateLeftSpace();
                 triggerFlyAnimation(displayNumber, null);
             }
             // Очищаем через 1 секунду (длительность анимации)

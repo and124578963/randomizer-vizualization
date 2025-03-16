@@ -6,6 +6,7 @@ const AdminPage = () => {
     const [currentState, setCurrentState] = useState(null);
     const [showState, setShowState] = useState(false); // состояние для показа/скрытия
     const navigate = useNavigate();
+    const [isProcessing, setIsProcessing] = useState(false); // Новое состояние для блокировки
     const host = "http://localhost:8080";
 
     // Получение текущего состояния
@@ -57,24 +58,35 @@ const AdminPage = () => {
 
     // Действие третьей кнопки зависит от currentState.status
     const handleThirdButton = async () => {
-        if (!currentState) return;
-        switch (currentState.status) {
-            case 'ГОТОВ':
-                await handleGenerate();
-                break;
-            case 'НОВЫЙ ЭТАП':
-                if(currentState.remainingStages === 0)
-                    break;
-            case 'НОМЕР СГЕНЕРИРОВАН':
-            case 'ГОТОВ К СЛЕДУЮЩЕМУ ВЫБОРУ':
-            case 'ЭТАП ЗАВЕРШЕН':
+        if (isProcessing || !currentState) return; // Блокируем повторные нажатия
 
-                await handleAdvance();
-                break;
-            case 'КОНЕЦ':
-                break;
-            default:
-                await handleGenerate();
+        try {
+            switch (currentState.status) {
+                case 'ГОТОВ':
+                    setIsProcessing(true); // Начинаем обработку
+                    await handleGenerate();
+                    break;
+                case 'НОВЫЙ ЭТАП':
+                    if(currentState.remainingStages === 0)
+                        break;
+                case 'НОМЕР СГЕНЕРИРОВАН':
+                case 'ГОТОВ К СЛЕДУЮЩЕМУ ВЫБОРУ':
+                case 'ЭТАП ЗАВЕРШЕН':
+
+                    await handleAdvance();
+                    break;
+                case 'КОНЕЦ':
+                    break;
+                default:
+                    setIsProcessing(true); // Начинаем обработку
+                    await handleGenerate();
+
+            }
+        } catch (error) {
+            console.error('Ошибка в handleThirdButton:', error);
+        } finally {
+            // Разблокируем через 3 секунды
+            setTimeout(() => setIsProcessing(false), 8000);
         }
     };
 
@@ -85,9 +97,13 @@ const AdminPage = () => {
             case 'ГОТОВ':
                 return 'Запустить рандомайзер';
             case 'НОМЕР СГЕНЕРИРОВАН':
+                if(currentState.remainingStages === 0)
+                    break;
+                return 'Перейти к следующей цифре';
             case 'НОВЫЙ ЭТАП':
                 if(currentState.remainingStages === 0)
                     break;
+                return 'Начать этап ' + currentState.currentStage;
             case 'ГОТОВ К СЛЕДУЮЩЕМУ ВЫБОРУ':
                 return 'Перейти к следующей цифре';
             case 'ЭТАП ЗАВЕРШЕН':
@@ -118,7 +134,7 @@ const AdminPage = () => {
         <div className="container mt-5 text-center">
             <h2 className="mb-4">Страница управления</h2>
             <div className="mb-3">
-                <button className="btn btn-primary me-2" onClick={() => navigate('/visualization')}>
+                <button className="btn btn-primary me-2" onClick={() => navigate('/uyqwefgqiuye12iu3gh12h3/visualization')}>
                     Перейти на страницу визуализации
                 </button>
             </div>
@@ -128,7 +144,8 @@ const AdminPage = () => {
                 </button>
             </div>
             <div className="mb-3">
-                <button className="btn btn-success me-2" onClick={handleThirdButton}>
+                <button className="btn btn-success me-2" onClick={handleThirdButton}
+                        disabled={isProcessing || currentState?.status === 'КОНЕЦ'}>
                     {getThirdButtonLabel()}
                 </button>
             </div>
