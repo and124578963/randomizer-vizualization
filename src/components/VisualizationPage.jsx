@@ -23,8 +23,8 @@ const VisualizationPage = () => {
 
 
     const centerPosition = useRef({
-        x: typeof window !== 'undefined' ? window.innerWidth/2 : 0,
-        y: typeof window !== 'undefined' ? window.innerHeight/2 : 0,
+        x: 864,
+        y: 480,
         fontSize: 350
     });
 
@@ -63,8 +63,8 @@ const VisualizationPage = () => {
     useEffect(() => {
         const handleResize = () => {
             centerPosition.current = {
-                x: window.innerWidth/2,
-                y: window.innerHeight/2,
+                x: 864,
+                y: 480,
                 fontSize: 350
             };
         };
@@ -327,7 +327,17 @@ const VisualizationPage = () => {
 
     return (
         <div className="visualization-page">
-            <div className="background"></div>
+            <video
+                className="background-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+                width={1728}
+                height={960}
+            >
+                <source src="https://my-ration.ru/uyqwefgqiuye12iu3gh12h3/static/media/back.mp4" type="video/mp4" />
+            </video>
             {renderDrawnNumbers()}
         </div>
     );

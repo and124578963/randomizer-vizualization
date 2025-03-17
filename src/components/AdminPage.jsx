@@ -64,6 +64,7 @@ const AdminPage = () => {
             switch (currentState.status) {
                 case 'ГОТОВ':
                     setIsProcessing(true); // Начинаем обработку
+                    setTimeout(() => setIsProcessing(false), 8000);
                     await handleGenerate();
                     break;
                 case 'НОВЫЙ ЭТАП':
@@ -72,7 +73,8 @@ const AdminPage = () => {
                 case 'НОМЕР СГЕНЕРИРОВАН':
                 case 'ГОТОВ К СЛЕДУЮЩЕМУ ВЫБОРУ':
                 case 'ЭТАП ЗАВЕРШЕН':
-
+                    setIsProcessing(true); // Начинаем обработку
+                    setTimeout(() => setIsProcessing(false), 1000);
                     await handleAdvance();
                     break;
                 case 'КОНЕЦ':
@@ -84,10 +86,8 @@ const AdminPage = () => {
             }
         } catch (error) {
             console.error('Ошибка в handleThirdButton:', error);
-        } finally {
-            // Разблокируем через 3 секунды
-            setTimeout(() => setIsProcessing(false), 8000);
-        }
+
+    }
     };
 
     // Определение надписи для третьей кнопки в зависимости от состояния

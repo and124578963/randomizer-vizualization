@@ -6,47 +6,25 @@
 }
 
 
-/* Контейнер на весь экран */
 .visualization-page {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    color: white;
+    background: #000;
 }
 
-/* Фоновое изображение.
-   Если изображение лежит в public, адрес должен быть вида '/бэк.png' */
-.background {
-    position: fixed;
+
+.background-video {
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/public/бэк.png');
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
+
+    width: 1728px;
+    height: 960px;
+    z-index: 0;
 }
 
-
-
-/*!* Отображение drawnNumbers в 2 ряда *!*/
-/*.drawn-numbers {*/
-/*    position: absolute;*/
-/*    bottom: 20px;*/
-/*    left: 50%;*/
-/*    transform: translateX(-50%);*/
-/*    width: 90%;*/
-/*    text-align: center;*/
-/*    z-index: 1;*/
-/*}*/
-
-/*.drawn-number {*/
-/*    font-size: 48px;*/
-/*    margin: 10px;*/
-/*    display: inline-block;*/
-/*}*/
 
 /* Добавляем стили для drawn-numbers */
 .drawn-numbers {
